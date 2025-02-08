@@ -1,9 +1,5 @@
 let routes;
 
-window.addEventListener('popstate', () => {
-    routes[location.pathname]?.();
-});
-
 const goto = (url, { push } = {}) => {
     if (push) {
         history.pushState({}, '', url);
@@ -18,6 +14,11 @@ const goto = (url, { push } = {}) => {
 
 const start = (params) => {
     routes = params.routes;
+
+    window.addEventListener('popstate', () => {
+        routes[location.pathname]?.();
+    });
+
     goto(`${location.pathname}${location.search}`);
 };
 

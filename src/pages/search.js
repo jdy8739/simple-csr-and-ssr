@@ -1,3 +1,10 @@
+const getInintialHTML = () => {
+    return `
+        <p>Searching for ...</p>
+    `
+}
+
+
 const renderSearch = async ({ searchParams }) => {
     document.querySelector('#app').innerHTML = `
         <p>Searching for ${searchParams.query}...</p>
@@ -21,3 +28,4 @@ const renderSearch = async ({ searchParams }) => {
 };
 
 export default renderSearch;
+export { getInintialHTML };

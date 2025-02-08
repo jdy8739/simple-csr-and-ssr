@@ -1,9 +1,14 @@
-import renderIndex from "./pages";
-import renderSearch from "./pages/search";
+import renderIndex, { getInintialHTML } from "./pages";
+import renderSearch, { getInintialHTML as getInintialSearchHTML } from "./pages/search";
 
 const ROUTES = {
     '/': renderIndex,
     '/search': renderSearch
 };
 
-export default ROUTES;
+ const INITIAL_HTML = {
+    '/': getInintialHTML,
+    '/search': getInintialSearchHTML
+};
+
+export { ROUTES, INITIAL_HTML };

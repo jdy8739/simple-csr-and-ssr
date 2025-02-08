@@ -1,4 +1,8 @@
 import start from "./router";
-import ROUTES from "./routes";
+import { INITIAL_HTML, ROUTES } from "./routes";
 
-start({ routes: ROUTES });
+if (typeof window !== 'undefined') {
+    start({ routes: ROUTES });
+}
+
+export { INITIAL_HTML };

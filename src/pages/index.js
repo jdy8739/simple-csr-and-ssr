@@ -1,14 +1,17 @@
 import { goto } from "../router";
 
-const renderIndex = () => {
-    document.querySelector('#app').innerHTML = `
+const getInintialHTML = () => {
+    return `
         <h1>Search movie</h1>
-
         <form>
-        <input type="search" name="query" />
-        <button type="submit">Search</button>
+            <input type="search" name="query" />
+            <button type="submit">Search</button>
         </form>
     `
+}
+
+const renderIndex = () => {
+    document.querySelector('#app').innerHTML = getInintialHTML();
 
     const form = document.querySelector('form');
 
@@ -22,3 +25,4 @@ const renderIndex = () => {
 };
 
 export default renderIndex;
+export { getInintialHTML };
