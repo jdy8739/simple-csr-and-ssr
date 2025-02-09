@@ -10,6 +10,12 @@ const port = 3000;
 app.use(cors());
 app.use(express.static('dist'));
 
+const getFilteredMovies = ({ movies = [], query = '' }) => {
+  return query ? movies.
+    filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) :
+    [];
+}
+
 app.get('/', (req, res) => {
   fs.readFile('index.html', (error, file) => 
     res.send(file.toString().replaceAll(
@@ -20,12 +26,22 @@ app.get('/', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
+  fs.readFile('index.html', (error, file) => {
+    const { query: { query } } = req;
+    
+    res.send(file.toString().replaceAll(
+      '<!--app-->',
+      INITIAL_HTML['/search']({
+        movies: getFilteredMovies({ movies, query })
+      })
+    ))}
+  );
+})
+
+app.get('/api/search', (req, res) => {
   const { query: { query } } = req;
 
-  const filteredMovies = query ? movies.
-    filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) : [];
-
-  res.send(filteredMovies);
+  res.send(getFilteredMovies({ movies, query }));
 })
 
 app.listen(port, () => {

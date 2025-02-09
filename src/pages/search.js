@@ -1,6 +1,14 @@
-const getInintialHTML = () => {
+const getInintialHTML = ({ movies = [] }) => {
     return `
-        <p>Searching for ...</p>
+        <h1>Search Results</h1>
+        ${
+            movies.map((movie) => `
+                <div>
+                    <p>${movie.title}</p>
+                </div>
+            `)
+            .join('')
+        }
     `
 }
 
@@ -10,7 +18,10 @@ const renderSearch = async ({ searchParams }) => {
         <p>Searching for ${searchParams.query}...</p>
     `;
 
-    const response = await fetch(`http://localhost:3000/search?query=${searchParams.query}`);
+    const response = await fetch(
+        `${import.meta.env.MODE === 'development' ? 
+            'http://localhost:3000' : ''}/api/search?query=${searchParams.query}`
+        );
 
     const movies = await response.json();
 
