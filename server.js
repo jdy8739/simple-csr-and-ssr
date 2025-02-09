@@ -36,7 +36,7 @@ app.get('/search', (req, res) => {
       `
         <script>window.__INITIAL_DATA__ = ${JSON.stringify({ movies: initialData })}</script>
         ${
-            INITIAL_HTML['/search']({
+          INITIAL_HTML['/search']({
             movies: initialData
           })
         }
