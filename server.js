@@ -28,12 +28,19 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   fs.readFile('index.html', (error, file) => {
     const { query: { query } } = req;
+
+    const initialData = getFilteredMovies({ movies, query });
     
     res.send(file.toString().replaceAll(
       '<!--app-->',
-      INITIAL_HTML['/search']({
-        movies: getFilteredMovies({ movies, query })
-      })
+      `
+        <script>window.__INITIAL_DATA__ = ${JSON.stringify({ movies: initialData })}</script>
+        ${
+            INITIAL_HTML['/search']({
+            movies: initialData
+          })
+        }
+      `
     ))}
   );
 })

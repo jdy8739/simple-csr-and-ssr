@@ -1,6 +1,6 @@
 let routes;
 
-const goto = (url, { push } = {}) => {
+const goto = (url, { push, initialData } = {}) => {
     if (push) {
         history.pushState({}, '', url);
     }
@@ -9,7 +9,7 @@ const goto = (url, { push } = {}) => {
 
     const searchParams = Object.fromEntries(new URLSearchParams(queries));
 
-    routes[pathname]?.({ searchParams });
+    routes[pathname]?.({ searchParams, initialData });
 };
 
 const start = (params) => {
@@ -19,7 +19,9 @@ const start = (params) => {
         routes[location.pathname]?.();
     });
 
-    goto(`${location.pathname}${location.search}`);
+    goto(`${location.pathname}${location.search}`, {
+        initialData: window.__INITIAL_DATA__
+    });
 };
 
 export default start;
