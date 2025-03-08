@@ -1,0 +1,68 @@
+/* Reset default margins and paddings for better consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set base spacing for main elements */
+body {
+  padding: 2rem;
+}
+
+/* Container spacing */
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Element spacing */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* List spacing */
+ul, ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Form elements spacing */
+form {
+  margin: 2rem 0;
+}
+
+input, select, textarea {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Section spacing */
+section {
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+/* Table spacing */
+table {
+  margin: 1rem 0;
+}
+
+td, th {
+  padding: 0.5rem;
+}
