@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:server": "nodemon ./server.js",
+    "dev": "nodemon ./server.js",
     "build": "vite build && cp style/style.css dist/",
     "preview": "vite preview"
   },
