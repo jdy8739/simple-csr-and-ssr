@@ -64,8 +64,8 @@ app.get('/api/search', (req, res) => {
   res.send(getFilteredMovies({ movies, query }));
 })
 
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// })
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+})
 
 export default app;
