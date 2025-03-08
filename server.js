@@ -16,17 +16,30 @@ const getFilteredMovies = ({ movies = [], query = '' }) => {
     [];
 }
 
+const sendError = (res) => {
+  res.status(500).send('Sorry, something went wrong');
+}
+
 app.get('/', (req, res) => {
-  fs.readFile('index.html', (error, file) => 
+  fs.readFile('index.html', (error, file) => {
+    if (error) {
+      return sendError(res);
+    }
+
     res.send(file.toString().replaceAll(
-      '<!--app-->',
-      INITIAL_HTML['/']
-    ))
+        '<!--app-->',
+        INITIAL_HTML['/']
+      ))
+    }
   );
 })
 
 app.get('/search', (req, res) => {
   fs.readFile('index.html', (error, file) => {
+    if (error) {
+      return sendError(res);
+    }
+
     const { query: { query } } = req;
 
     const initialData = getFilteredMovies({ movies, query });
