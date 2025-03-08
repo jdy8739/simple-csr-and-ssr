@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import movies from './movies.json' assert { type: 'json' }; // Let node server know that this is a json.
+import movies from '../movies.json' assert { type: 'json' }; // Let node server know that this is a json.
 import fs from 'fs';
-import { INITIAL_HTML } from './dist/index.js';
+import { INITIAL_HTML } from '../dist/index.js';
 
 const app = express();
 const port = 3000;

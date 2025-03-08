@@ -24,3 +24,4 @@ movies.json
 *.njsproj
 *.sln
 *.sw?
+.vercel
