@@ -4,7 +4,7 @@ const getInintialHTML = () => {
     return `
         <h1>Search movie</h1>
         <form>
-            <input type="search" name="query" />
+            <input type="search" name="query" required />
             <button type="submit">Search</button>
         </form>
     `

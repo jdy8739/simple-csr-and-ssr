@@ -1,6 +1,10 @@
-const getInintialHTML = ({ movies = [] }) => {
+
+const getResultHTML = ({ movies = [] }) => {
+    if (movies.length === 0) {
+        return '<p>No movies found</p>'
+    }
+
     return `
-        <h1>Search Results</h1>
         ${
             movies.map((movie) => `
                 <div>
@@ -9,6 +13,13 @@ const getInintialHTML = ({ movies = [] }) => {
             `)
             .join('')
         }
+    `
+}
+
+const getInintialHTML = ({ movies = [] }) => {
+    return `
+        <h1>Search Results</h1>
+        ${getResultHTML({ movies })}
     `
 }
 
