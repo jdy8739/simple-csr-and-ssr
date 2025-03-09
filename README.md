@@ -5,6 +5,9 @@
 특정 프레임워크 없이 순수 JavaScript를 활용하여 기본적인 렌더링 방식의 차이를 경험해보는 것이 목표입니다.  
 프로젝트는 영화검색 서비스의 형식을 따라 구현되었습니다.  
 
+이 링크를 새 탭에서 열려면 우클릭 후 "새 탭에서 열기"를 선택하세요.
+<a href="https://simple-csr-and-ssr-production.up.railway.app/" target="_blank">배포 링크</a>
+
 ---
 
 ## 🎯 **프로젝트 목표 (Goals)**  
@@ -53,16 +56,3 @@ yarn dev:server
 
 🔹 CSR: history API의 메소드와 window.history 이벤트를 활용하여, 프레임워크에서 CSR을 어떻게 구현하는지 이해할 수 있었음.  
 🔹 SSR: 서버에서 요청별로 HTML을 구성하는 방식과, 서버에서 가져온 데이터를 window 객체에 주입하여 클라이언트에서 이를 활용하는 방법을 학습함.  
-
----
-
-## 🔧 향후 개선점 (Improvements)
-
-🚧 스타일 개선  
-Tailwind를 사용한 스타일 처리  
-
-🚧 서버에서 반환된 html과 하이드레이션 이후의 html에 대한 비교  
-Next.js에서 제공하는 각 시점의 html 내용 비교 및 불일치할 시 에러 던지기 구현  
-
-🚧 배포 진행  
-Vercel을 통한 배포  
