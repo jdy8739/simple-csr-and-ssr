@@ -1,3 +1,4 @@
+import { URL } from '../const.js';
 
 const getResultHTML = (movies = []) => {
     if (movies.length === 0) {
@@ -16,19 +17,16 @@ const getResultHTML = (movies = []) => {
     `
 }
 
-const getInintialHTML = (movies) => {
+const getInintialSearchHTML = (movies) => {
     return `
         <h1>Search Results</h1>
         ${getResultHTML(movies)}
     `
 }
 
-const URL = import.meta.env.MODE === 'development' ? 
-                'http://localhost:3000' : '';
-
 const renderSearch = async ({ searchParams, initialData }) => {
     if (!initialData) {
-            document.querySelector('#app').innerHTML = `
+        document.querySelector('#app').innerHTML = `
             <p>Searching for ${searchParams.query}...</p>
         `;
 
@@ -43,4 +41,4 @@ const renderSearch = async ({ searchParams, initialData }) => {
 };
 
 export default renderSearch;
-export { getInintialHTML };
+export { getInintialSearchHTML };

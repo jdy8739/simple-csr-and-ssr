@@ -47,11 +47,25 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/details/:id', (req, res) => {
-  const { id } = req.params;
+  fs.readFile('index.html', (error, file) => {
+    if (error) {
+      return sendError(res);
+    }
 
-  const movie = movies.find((movie) => movie.id === Number(id));
+    const { params: { id } } = req;
 
-  res.send(movie);
+    const initialData = getMovieDetails({ movies, id });
+
+    res.send(file.toString().replaceAll(
+      '<!--app-->',
+      `
+        <script>window.__INITIAL_DATA__ = ${JSON.stringify({ movies: initialData })}</script>
+        ${
+          INITIAL_HTML['/details/:id'](initialData)
+        }
+      `
+    ))}
+  );
 })
 
 app.get('/api/search', (req, res) => {
@@ -60,18 +74,33 @@ app.get('/api/search', (req, res) => {
   res.send(getFilteredMovies({ movies, query }).map(getMovieTitle));
 })
 
+app.get('/api/details/:id', (req, res) => {
+  const { params: { id } } = req;
+
+  const movie = getMovieDetails({ movies, id });
+
+  res.send(movie);
+})
+
 app.listen((port), () => {
   console.log(`Example app listening on port ${port}`);
 })
 
+/** get movie title */
 function getMovieTitle({ title }) {
   return title;
 };
 
+/** filter movies by the search query */
 function getFilteredMovies({ movies = [], query = '' }) {
   return query ? movies.
     filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) :
     [];
+};
+
+/** get movie details by id */
+function getMovieDetails({ movies, id }) {
+  return movies.find((movie) => movie.id === Number(id));
 };
 
 function sendError(res) {
