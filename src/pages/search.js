@@ -1,4 +1,5 @@
-import { URL } from '../const.js';
+import { URL } from '../../const.js';
+import { fetchAPI, updateInnerHTML } from '../../utils.js';
 
 const getResultHTML = (movies = []) => {
     if (movies.length === 0) {
@@ -26,17 +27,13 @@ const getInintialSearchHTML = (movies) => {
 
 const renderSearch = async ({ searchParams, initialData }) => {
     if (!initialData) {
-        document.querySelector('#app').innerHTML = `
-            <p>Searching for ${searchParams.query}...</p>
-        `;
+        const app = document.querySelector('#app');
 
-        const response = await fetch(
-            `${URL}/api/search?query=${searchParams.query}`
-            );
+        updateInnerHTML({ container: app, elements: `<p>Searching for ${searchParams.query}...</p>` });
 
-        const movies = await response.json();
+        const movies = await fetchAPI(`${URL}/api/search?query=${searchParams.query}`);
 
-        document.querySelector('#app').innerHTML = getInintialHTML(movies);
+        updateInnerHTML({ container: app, elements: getInintialSearchHTML(movies) });
     };
 };
 

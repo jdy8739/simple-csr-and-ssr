@@ -1,4 +1,5 @@
-import { URL } from '../const.js';
+import { URL } from '../../const.js';
+import { fetchAPI, updateInnerHTML } from '../../utils.js';
 
 const getResultHTML = (movie) => {
     return `
@@ -96,17 +97,13 @@ const getInintialDetailsHTML = (movie) => {
 
 const renderDetails = async ({ movieId, initialData }) => {
     if (!initialData) { 
-        document.querySelector('#app').innerHTML = `
-            <p>Loading...</p>
-        `;
+        const app = document.querySelector('#app');
 
-        const response = await fetch(
-            `${URL}/api/details/${movieId}`
-            );
+        updateInnerHTML({ container: app, elements: '<p>Loading...</p>' });
 
-        const movie = await response.json();
+        const movie = await fetchAPI(`${URL}/api/details/${movieId}`);
 
-        document.querySelector('#app').innerHTML = getInintialHTML(movie);
+        updateInnerHTML({ container: app, elements: getInintialDetailsHTML(movie) });
     };
 };
 
