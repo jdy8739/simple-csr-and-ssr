@@ -47,7 +47,7 @@ yarn
 yarn build
 
 # express 서버 구동
-yarn dev:server
+yarn dev
 ```
 
 ---
