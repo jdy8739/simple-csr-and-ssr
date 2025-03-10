@@ -10,16 +10,6 @@ const port = 3000;
 app.use(cors());
 app.use(express.static('dist'));
 
-const getFilteredMovies = ({ movies = [], query = '' }) => {
-  return query ? movies.
-    filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) :
-    [];
-}
-
-const sendError = (res) => {
-  res.status(500).send('Sorry, something went wrong');
-}
-
 app.get('/', (req, res) => {
   fs.readFile('index.html', (error, file) => {
     if (error) {
@@ -42,16 +32,14 @@ app.get('/search', (req, res) => {
 
     const { query: { query } } = req;
 
-    const initialData = getFilteredMovies({ movies, query });
+    const initialData = getFilteredMovies({ movies, query }).map(getMovieTitle);
     
     res.send(file.toString().replaceAll(
       '<!--app-->',
       `
         <script>window.__INITIAL_DATA__ = ${JSON.stringify({ movies: initialData })}</script>
         ${
-          INITIAL_HTML['/search']({
-            movies: initialData
-          })
+          INITIAL_HTML['/search'](initialData)
         }
       `
     ))}
@@ -69,11 +57,25 @@ app.get('/details/:id', (req, res) => {
 app.get('/api/search', (req, res) => {
   const { query: { query } } = req;
 
-  res.send(getFilteredMovies({ movies, query }));
+  res.send(getFilteredMovies({ movies, query }).map(getMovieTitle));
 })
 
-app.listen(port, () => {
+app.listen((port), () => {
   console.log(`Example app listening on port ${port}`);
 })
+
+function getMovieTitle({ title }) {
+  return title;
+};
+
+function getFilteredMovies({ movies = [], query = '' }) {
+  return query ? movies.
+    filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) :
+    [];
+};
+
+function sendError(res) {
+  res.status(500).send('Sorry, something went wrong');
+};
 
 export default app;

@@ -1,5 +1,5 @@
 
-const getResultHTML = ({ movies = [] }) => {
+const getResultHTML = (movies = []) => {
     if (movies.length === 0) {
         return '<p>No movies found</p>'
     }
@@ -8,7 +8,7 @@ const getResultHTML = ({ movies = [] }) => {
         ${
             movies.map((movie) => `
                 <div>
-                    <p>${movie.title}</p>
+                    <p>${movie}</p>
                 </div>
             `)
             .join('')
@@ -16,13 +16,15 @@ const getResultHTML = ({ movies = [] }) => {
     `
 }
 
-const getInintialHTML = ({ movies = [] }) => {
+const getInintialHTML = (movies) => {
     return `
         <h1>Search Results</h1>
-        ${getResultHTML({ movies })}
+        ${getResultHTML(movies)}
     `
 }
 
+const URL = import.meta.env.MODE === 'development' ? 
+                'http://localhost:3000' : '';
 
 const renderSearch = async ({ searchParams, initialData }) => {
     if (!initialData) {
@@ -31,13 +33,12 @@ const renderSearch = async ({ searchParams, initialData }) => {
         `;
 
         const response = await fetch(
-            `${import.meta.env.MODE === 'development' ? 
-                'http://localhost:3000' : ''}/api/search?query=${searchParams.query}`
+            `${URL}/api/search?query=${searchParams.query}`
             );
 
         const movies = await response.json();
 
-        document.querySelector('#app').innerHTML = getInintialHTML({ movies });
+        document.querySelector('#app').innerHTML = getInintialHTML(movies);
     };
 };
 
