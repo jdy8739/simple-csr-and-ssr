@@ -6,7 +6,7 @@ const getResultHTML = (movie) => {
         <div class="movie-detail">
             <header class="movie-header">
                 <div class="poster">
-                    <img src="https://image.tmdb.org/t/p/w500/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg" alt="Godzilla vs. Kong">
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" width="500" height="750" alt="${movie.title}">
                 </div>
                 <div class="header-content">
                     <h1>${movie.title}</h1>
