@@ -33,17 +33,11 @@ app.get('/search', (req, res) => {
     const { query: { query } } = req;
 
     const initialData = getFilteredMovies({ movies, query }).map(getMovieTitle);
+
+    const serversideHTML = getServersideHTML({ file, initialData, pathname: '/search' });
     
-    res.send(file.toString().replaceAll(
-      '<!--app-->',
-      `
-        <script>window.__INITIAL_DATA__ = ${JSON.stringify({ movies: initialData })}</script>
-        ${
-          INITIAL_HTML['/search'](initialData)
-        }
-      `
-    ))}
-  );
+    res.send(serversideHTML);
+  });
 })
 
 app.get('/details/:id', (req, res) => {
@@ -55,17 +49,11 @@ app.get('/details/:id', (req, res) => {
     const { params: { id } } = req;
 
     const initialData = getMovieDetails({ movies, id });
+    
+    const serversideHTML = getServersideHTML({ file, initialData, pathname: '/details/:id' });
 
-    res.send(file.toString().replaceAll(
-      '<!--app-->',
-      `
-        <script>window.__INITIAL_DATA__ = ${JSON.stringify({ movies: initialData })}</script>
-        ${
-          INITIAL_HTML['/details/:id'](initialData)
-        }
-      `
-    ))}
-  );
+    res.send(serversideHTML);
+  });
 })
 
 app.get('/api/search', (req, res) => {
@@ -102,6 +90,22 @@ function getFilteredMovies({ movies = [], query = '' }) {
 function getMovieDetails({ movies, id }) {
   return movies.find((movie) => movie.id === Number(id));
 };
+
+/** generate serverside HTML */
+function getServersideHTML({ file, initialData, pathname }) {
+  const serversideHTML = INITIAL_HTML[pathname](initialData);
+
+  const serversideScript = 
+    `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
+
+  return file.toString().replaceAll(
+    '<!--app-->',
+    `
+      ${serversideScript}
+      ${serversideHTML}
+    `
+  )
+}
 
 function sendError(res) {
   res.status(500).send('Sorry, something went wrong');
