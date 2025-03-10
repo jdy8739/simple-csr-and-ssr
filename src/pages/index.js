@@ -1,3 +1,4 @@
+import { updateInnerHTML } from "../../utils";
 import { goto } from "../router";
 
 const getInintialHTML = () => {
@@ -11,7 +12,9 @@ const getInintialHTML = () => {
 }
 
 const renderIndex = () => {
-    document.querySelector('#app').innerHTML = getInintialHTML();
+    const app = document.querySelector('#app');
+
+    updateInnerHTML({ container: app, elements: getInintialHTML() });
 
     const form = document.querySelector('form');
 

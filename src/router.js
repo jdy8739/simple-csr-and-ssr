@@ -9,20 +9,64 @@ const goto = (url, { push, initialData } = {}) => {
 
     const [pathname, queries] = url.split('?');
 
-    const searchParams = getSearchParams(queries);
+   if (pathname === '/search') {
+        const searchParams = getSearchParams(queries);
 
-    routes[pathname]?.({ searchParams, initialData });
+        routes[pathname]?.({ searchParams, initialData });
+   } else if (pathname.includes('/details/')) {
+        const movieId = pathname.split('/')[2];
+
+        routes['/details/:id']?.({ movieId, initialData });
+   } else {
+        routes[pathname]?.({ initialData });
+   }
 };
+
+const goToDetails = (e) => {
+    e.stopPropagation();
+    
+    const movieId = e.target.dataset.id;
+    
+    goto(`/details/${movieId}`, { push: true });
+}
+
+const clearMovieTitleEventListeners = () => {
+    const movies = document.querySelectorAll('.movie-title');
+
+    movies.forEach((movie) => {
+        movie.removeEventListener('click', goToDetails);
+    })
+}
+
+const addMovieTitleEventListener = () => {
+    const movies = document.querySelectorAll('.movie-title');
+
+    movies.forEach((movie) => {
+        movie.addEventListener('click', goToDetails)
+    })
+}
+
 
 const start = (params) => {
     routes = params.routes;
 
     window.addEventListener('popstate', () => {
-        const query = location.search.replace('?', '');
+        if (location.pathname === '/search') {
+            const query = location.search.replace('?', '');
 
-        const searchParams = getSearchParams(query);
+            const searchParams = getSearchParams(query);
 
-        routes[location.pathname]?.({ searchParams });
+            routes[location.pathname]?.({ searchParams });
+        } else if (location.pathname.includes('/details/')) {
+            const movieId = location.pathname.split('/')[2];
+
+            routes['/details/:id']?.({ movieId });
+        } else {
+            routes[location.pathname]?.({});
+        }
+
+        // add condition to check if the page is search page
+        clearMovieTitleEventListeners();
     });
 
     goto(`${location.pathname}${location.search}`, {
@@ -31,4 +75,4 @@ const start = (params) => {
 };
 
 export default start;
-export { goto };
+export { goto, addMovieTitleEventListener };

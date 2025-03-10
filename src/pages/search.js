@@ -1,17 +1,18 @@
 import { URL } from '../../const.js';
 import { fetchAPI, updateInnerHTML } from '../../utils.js';
+import { addMovieTitleEventListener } from '../router.js';
 
 const getResultHTML = (movies = []) => {
     if (movies.length === 0) {
-        return '<p>No movies found</p>'
+        return '<li>No movies found</li>'
     }
 
     return `
         ${
-            movies.map((movie) => `
-                <div>
-                    <p>${movie}</p>
-                </div>
+            movies.map(({ id, title }) => `
+                <li>
+                    <button class="movie-title" data-id="${id}">${title}</button>
+                </li>
             `)
             .join('')
         }
@@ -21,7 +22,9 @@ const getResultHTML = (movies = []) => {
 const getInintialSearchHTML = (movies) => {
     return `
         <h1>Search Results</h1>
-        ${getResultHTML(movies)}
+        <ul>
+            ${getResultHTML(movies)}
+        </ul>
     `
 }
 
@@ -35,6 +38,8 @@ const renderSearch = async ({ searchParams, initialData }) => {
 
         updateInnerHTML({ container: app, elements: getInintialSearchHTML(movies) });
     };
+
+    addMovieTitleEventListener();
 };
 
 export default renderSearch;

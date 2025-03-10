@@ -32,7 +32,7 @@ app.get('/search', (req, res) => {
 
     const { query: { query } } = req;
 
-    const initialData = getFilteredMovies({ movies, query }).map(getMovieTitle);
+    const initialData = getFilteredMovies({ movies, query }).map(getMovieIdWithTitle);
 
     const serversideHTML = getServersideHTML({ file, initialData, pathname: '/search' });
     
@@ -59,7 +59,7 @@ app.get('/details/:id', (req, res) => {
 app.get('/api/search', (req, res) => {
   const { query: { query } } = req;
 
-  res.send(getFilteredMovies({ movies, query }).map(getMovieTitle));
+  res.send(getFilteredMovies({ movies, query }).map(getMovieIdWithTitle));
 })
 
 app.get('/api/details/:id', (req, res) => {
@@ -74,15 +74,15 @@ app.listen((port), () => {
   console.log(`Example app listening on port ${port}`);
 })
 
-/** get movie title */
-function getMovieTitle({ title }) {
-  return title;
+/** get movie id with title */
+function getMovieIdWithTitle({ id, title }) {
+  return { id, title };
 };
 
 /** filter movies by the search query */
 function getFilteredMovies({ movies = [], query = '' }) {
-  return query ? movies.
-    filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) :
+  return query ? 
+    movies.filter((movie) => movie.title.toLowerCase().includes(query.toLowerCase())) :
     [];
 };
 
