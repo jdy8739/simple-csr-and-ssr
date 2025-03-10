@@ -58,6 +58,14 @@ app.get('/search', (req, res) => {
   );
 })
 
+app.get('/details/:id', (req, res) => {
+  const { id } = req.params;
+
+  const movie = movies.find((movie) => movie.id === Number(id));
+
+  res.send(movie);
+})
+
 app.get('/api/search', (req, res) => {
   const { query: { query } } = req;
 
