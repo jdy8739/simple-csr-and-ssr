@@ -6,7 +6,7 @@ const getResultHTML = (movie) => {
         <div class="movie-detail">
             <header class="movie-header">
                 <div class="poster">
-                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" width="500" height="750" alt="${movie.title}">
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
                 </div>
                 <div class="header-content">
                     <h1>${movie.title}</h1>
@@ -35,10 +35,14 @@ const getResultHTML = (movie) => {
                         <span class="label">투표수</span>
                         <span class="value">${movie.vote_count}</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="label">수익</span>
-                        <span class="value">$${(movie.revenue/1000000).toFixed(1)}M</span>
-                    </div>
+                    ${
+                        movie.revenue ? `
+                        <div class="stat-item">
+                            <span class="label">수익</span>
+                            <span class="value">$${(movie.revenue/1000000).toFixed(1)}M</span>
+                        </div>
+                            ` : ''
+                    }
                 </div>
             </section>
             <section class="credits">
