@@ -13,10 +13,10 @@ const getResultHTML = (movie) => {
                     <p class="tagline">${movie.tagline}</p>
                 <div class="meta">
                     ${
-                        movie.certification ? `<span class="certification">${movie.certification}</span>` : ''
+                        movie.certification ? `<span class="stat-item gradient">${movie.certification}</span>` : ''
                     }
-                    <span class="runtime">${movie.runtime}분</span>
-                    <span class="release-date">${movie.release_date}</span>
+                    <span class="stat-item gradient">${movie.runtime}분</span>
+                    <span class="stat-item gradient">${movie.release_date}</span>
                 </div>
                     <div class="genres">
                         ${movie.genres.map(genre => `<span class="genre-tag">${genre}</span>`).join('')}
@@ -29,17 +29,17 @@ const getResultHTML = (movie) => {
                     <p>${movie.overview}</p>
                 </div>
                 <div class="stats">
-                    <div class="stat-item">
+                    <div class="stat-item gradient">
                         <span class="label">평점</span>
                         <span class="value">${movie.vote_average}</span>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-item gradient">
                         <span class="label">투표수</span>
                         <span class="value">${movie.vote_count}</span>
                     </div>
                     ${
                         movie.revenue ? `
-                        <div class="stat-item">
+                        <div class="stat-item gradient">
                             <span class="label">수익</span>
                             <span class="value">$${(movie.revenue/1000000).toFixed(1)}M</span>
                         </div>
@@ -63,7 +63,7 @@ const getResultHTML = (movie) => {
                     <h2>주요 출연진</h2>
                     <div class="cast-list">
                         ${movie.cast.map(actor => `
-                        <div class="cast-item">
+                        <div class="cast-item gradient">
                             <span class="actor-name">${actor.name}</span>
                         </div>
                         `).join('')}
@@ -74,7 +74,7 @@ const getResultHTML = (movie) => {
                 <h2>비슷한 영화</h2>
                 <div class="movie-grid">
                     ${movie.similar.slice(0, 6).map(similar => `
-                        <div class="similar-movie-card">
+                        <div class="similar-movie-card gradient">
                         <h3>${similar.title}</h3>
                         </div>
                     `).join('')}
