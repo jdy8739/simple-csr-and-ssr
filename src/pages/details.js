@@ -12,7 +12,9 @@ const getResultHTML = (movie) => {
                     <h1>${movie.title}</h1>
                     <p class="tagline">${movie.tagline}</p>
                 <div class="meta">
-                    <span class="certification">${movie.certification}</span>
+                    ${
+                        movie.certification ? `<span class="certification">${movie.certification}</span>` : ''
+                    }
                     <span class="runtime">${movie.runtime}분</span>
                     <span class="release-date">${movie.release_date}</span>
                 </div>
