@@ -1,7 +1,28 @@
+/** 
+ * This is a router that is used to navigate between pages
+ * !! this should never be changed after the router is started !!
+ */
 let routes;
 
+/** get the search params */
 const getSearchParams = (queries) => Object.fromEntries(new URLSearchParams(queries));
 
+/** call the render function based on the pathname and queries */
+const gotoPathname = ({ pathname, queries, initialData }) => {
+    if (pathname === '/search') {
+        const searchParams = getSearchParams(queries);
+
+        routes[pathname]?.({ searchParams, initialData });
+    } else if (pathname.includes('/details/')) {
+        const movieId = pathname.split('/')[2];
+
+        routes['/details/:id']?.({ movieId, initialData });
+    } else {
+        routes[pathname]?.();
+    }
+}
+
+/** navigate to the url */
 const goto = (url, { push, initialData } = {}) => {
     if (push) {
         history.pushState({}, '', url);
@@ -9,19 +30,10 @@ const goto = (url, { push, initialData } = {}) => {
 
     const [pathname, queries] = url.split('?');
 
-   if (pathname === '/search') {
-        const searchParams = getSearchParams(queries);
-
-        routes[pathname]?.({ searchParams, initialData });
-   } else if (pathname.includes('/details/')) {
-        const movieId = pathname.split('/')[2];
-
-        routes['/details/:id']?.({ movieId, initialData });
-   } else {
-        routes[pathname]?.({ initialData });
-   }
+    gotoPathname({ pathname, queries, initialData });
 };
 
+/** go to the details page */
 const goToDetails = (e) => {
     e.stopPropagation();
     
@@ -30,6 +42,7 @@ const goToDetails = (e) => {
     goto(`/details/${movieId}`, { push: true });
 }
 
+/** clear the movie title event listeners */
 const clearMovieTitleEventListeners = () => {
     const movies = document.querySelectorAll('.movie-title');
 
@@ -38,6 +51,7 @@ const clearMovieTitleEventListeners = () => {
     })
 }
 
+/** add the movie title event listener */
 const addMovieTitleEventListener = () => {
     const movies = document.querySelectorAll('.movie-title');
 
@@ -46,24 +60,14 @@ const addMovieTitleEventListener = () => {
     })
 }
 
-
+/** start the router */
 const start = (params) => {
     routes = params.routes;
 
     window.addEventListener('popstate', () => {
-        if (location.pathname === '/search') {
-            const query = location.search.replace('?', '');
+        const { pathname, search } = location;
 
-            const searchParams = getSearchParams(query);
-
-            routes[location.pathname]?.({ searchParams });
-        } else if (location.pathname.includes('/details/')) {
-            const movieId = location.pathname.split('/')[2];
-
-            routes['/details/:id']?.({ movieId });
-        } else {
-            routes[location.pathname]?.({});
-        }
+        gotoPathname({ pathname, queries: search.replace('?', '') });
 
         // add condition to check if the page is search page
         clearMovieTitleEventListeners();
