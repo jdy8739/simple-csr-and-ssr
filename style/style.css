@@ -90,3 +90,166 @@ ul button:focus {
     background: none;
     box-shadow: none;
 }
+
+.movie-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #1a1a1a;
+}
+
+.movie-header {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.poster img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.meta span {
+  padding: 0.3rem 0.8rem;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.genre-tag {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: #000;
+  color: white;
+  border-radius: 20px;
+  margin: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.main-info {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stats {
+  display: grid;
+  gap: 1rem;
+}
+
+.stat-item {
+  padding: 1rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.stat-item .label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stat-item .value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.credits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.crew h3 {
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.cast-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.cast-item {
+  padding: 1rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+}
+
+.similar-movies .movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.similar-movie-card {
+  padding: 1rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.similar-movie-card:hover {
+  transform: translateY(-4px);
+}
+
+.social-links {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  padding: 0.8rem 1.5rem;
+  background: #000;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: opacity 0.2s;
+}
+
+.social-link:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .movie-header {
+      grid-template-columns: 1fr;
+  }
+  
+  .poster {
+      max-width: 300px;
+      margin: 0 auto;
+  }
+  
+  .main-info,
+  .credits {
+      grid-template-columns: 1fr;
+  }
+}
